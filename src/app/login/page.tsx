@@ -5,18 +5,19 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 import Link from 'next/link';
+import { signIn } from '@/auth';
 
 import { IconBrandGithub } from "@tabler/icons-react";
 
 import { IconBrandGoogle } from "@tabler/icons-react";
 
-import { signIn } from "@/auth";    
-import { redirect } from "next/navigation";
+
+import { login } from "@/action/user"; 
 
 const Login = () => {
   return (
     <div className="mt-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white border border-[#121212]  dark:bg-black">
-      <form className="my-8">
+      <form className="my-8" action={login}>
         <Label htmlFor="email" className='mb-2'>Email Address</Label>
         <Input
           id="email"
@@ -48,7 +49,7 @@ const Login = () => {
       <form
         action={async () => {
           "use server";
-        //   await signIn("github");
+          await signIn("github");
         }}
       >
         <button
@@ -56,7 +57,7 @@ const Login = () => {
           type="submit"
         >
           <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-          <span className="text-neutral-700 dark:text-neutral-300 text-sm">
+          <span className="text-neutral-700 dark:text-neutral-300 text-sm cursor-pointer">
             Github
           </span>
         </button>

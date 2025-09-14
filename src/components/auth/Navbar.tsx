@@ -1,7 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button';
-const Navbar = () => {
+import { getSession } from "@/lib/getSession";
+import { signOut } from '@/auth';
+
+const Navbar = async () => {
+
+  const session = await getSession();
+  const user = session?.user;
   return (
     <nav className="flex justify-around items-center py-4 bg-[#141414] text-white">
       <Link href="/" className="text-xl font-bold">
@@ -9,7 +15,7 @@ const Navbar = () => {
       </Link>
 
       <ul className="hidden md:flex space-x-4 list-none">
-        {/* {!user ? ( */}
+        {!user ? (
           <>
             <li>
               <Link href="/login" className="hover:text-gray-400">
@@ -22,7 +28,7 @@ const Navbar = () => {
               </Link>
             </li>
           </>
-        {/* ) : ( */}
+        ) : (
           <>
             <li className="mt-2">
               <Link href="/private/dashboard" className="hover:text-gray-400">
@@ -31,17 +37,17 @@ const Navbar = () => {
             </li>
 
             <form
-            //   action={async () => {
-                // "use server";
-                // await signOut();
-            //   }}
+              action={async () => {
+                "use server";
+                await signOut();
+              }}
             >
               <Button type="submit" variant={"ghost"}>
                 Logout
               </Button>
             </form>
           </>
-        {/* )} */}
+        )}
       </ul>
     </nav>
   );

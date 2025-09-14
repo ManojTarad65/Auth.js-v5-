@@ -50,4 +50,11 @@ const register = async (formData: FormData) => {
   redirect("/login");
 };
 
-export { register, login };
+
+const fetchAllUsers = async()=>{
+        await connectToDB();
+        const users = await User.find();
+        return users;
+}
+
+export { register, login, fetchAllUsers };

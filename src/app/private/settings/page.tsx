@@ -1,6 +1,16 @@
 import React from 'react'
+import { getSession } from '@/lib/getSession';
+import { redirect } from 'next/navigation';
+import { fetchAllUsers } from '@/action/user';
+const Settings = async () => {
+  const session = await getSession();
+  const user = session?.user;
+  if (!user) redirect("/");
 
-const Settings = () => {
+  if(user?.role !=="admin") return redirect("/private/dashboard");
+
+  const allUsers=await fetchAllUsers();
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-xl font-bold mb-4">users</h1>
@@ -13,7 +23,7 @@ const Settings = () => {
           </tr>
         </thead>
 
-        {/* <tbody>
+        <tbody>
           {allUsers?.map((user) => (
             <tr key={user._id}>
               <td className="p-2">{user.firstName}</td>
@@ -32,7 +42,7 @@ const Settings = () => {
               </td>
             </tr>
           ))}
-        </tbody> */}
+        </tbody>
       </table>
     </div>
   );
